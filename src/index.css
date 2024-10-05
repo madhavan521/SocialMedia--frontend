@@ -1,0 +1,45 @@
+body{
+  /* background-image: url(./Assests/cover.png); */
+  background-color: black;
+  color: white;
+}
+
+input::placeholder {  
+  color: white !important; /* Force the placeholder text color to white */  
+  opacity: 1;  
+}  
+.btn{
+  border-radius: 20px;
+}
+input{
+  border: black !important
+
+}
+li{
+  list-style: none;
+}
+
+.sidebar {  
+  transition: all 0.3s ease; /* Smooth transition */  
+  background-color: #000000; /* Sidebar background color */  
+  width: 250px; /* Set width of sidebar */  
+  height: 100vh; /* Full height */  
+  padding: 15px; /* Padding for content */  
+  position: fixed; /* Fixed position */  
+  top: 0; /* Align to the top */  
+  left: 0; /* Align to the left */  
+  z-index: 1000; 
+}  
+
+.hidden {  
+  display: none;  
+}  
+
+.visible {  
+  display: block;
+}  
+.likeicon:hover{
+  color:red;
+  
+}
+
