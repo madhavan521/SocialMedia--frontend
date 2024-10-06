@@ -88,6 +88,7 @@ const IndividualProfile = () => {
                         </div>  
                         
                         <hr className='text-light' />  
+                      <Mypost username={data.username} />
                     </div>  
                 </div>    
         </div>  
