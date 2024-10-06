@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import img1 from '../../Assests/avatars/boy1.png'
 import img2 from '../../Assests/avatars/boy2.png'
 import img3 from '../../Assests/avatars/boy3.png'
-
+import Mypost from './Mypost';
 
 
   
