@@ -16,7 +16,7 @@ const Mypost = ({ username }) => {
     useEffect(() => {  
         const fetchPosts = async () => {  
             try {  
-                const response = await fetch(`http://localhost:8000/api/posts/user/${username}`, {  
+                const response = await fetch(`https://socialmedia-backend-wlia.onrender.com/api/posts/user/${username}`, {  
                     method: "GET",  
                     headers: {  
                         "Content-Type": "application/json"  
@@ -37,7 +37,7 @@ const Mypost = ({ username }) => {
     const handleDelete = async (id) => {  
         console.log(id)
         try {  
-            await fetch(`http://localhost:8000/api/posts/delete/${id}`, {  
+            await fetch(`https://socialmedia-backend-wlia.onrender.com/api/posts/delete/${id}`, {  
                 method: "DELETE",  
                 headers: {  
                     "Content-Type": "application/json"  
