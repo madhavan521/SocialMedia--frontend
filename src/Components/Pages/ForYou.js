@@ -11,9 +11,9 @@ const ForYou = () => {
     const { data } = useContext(UserContext);  
     const [posts, setPosts] = useState([]);  
     const [loading, setLoading] = useState(true);  
-    const image =[img1,img2,img3]
-    const num = Math.floor(Math.random()*3)
-    console.log(num)
+    const image = [img1, img2, img3];  
+    const num = Math.floor(Math.random() * 3);  
+    const navigate = useNavigate();  
 
     useEffect(() => {  
         const fetchPosts = async () => {  
@@ -87,7 +87,20 @@ const ForYou = () => {
         }  
     };  
 
-    if (loading) return <p>Loading posts...</p>;  
+    if (loading) return <p>Loading posts...</p>;   
+
+    // Check if user data is available  
+    if (!data) {  
+        return (  
+            <div className='container'>  
+                <Toaster position="top-center" reverseOrder={false} />  
+                <p>Please log in to see posts.</p>  
+                <button onClick={() => navigate('/login')} className='btn btn-primary'>  
+                    Log In  
+                </button>  
+            </div>  
+        );  
+    }  
 
     return (  
         <div className='container'>  
