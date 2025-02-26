@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';  
 import { CiHeart, CiBookmark } from "react-icons/ci";  
 import { toast, Toaster } from 'react-hot-toast';  
-import { Link } from 'react-router-dom';  
+import { Link, useNavigate } from 'react-router-dom';  
 import { UserContext } from '../../Context/UserContext';  
-import img1 from '../../Assests/avatars/boy1.png'
-import img2 from '../../Assests/avatars/boy2.png'
-import img3 from '../../Assests/avatars/boy3.png'
+import img1 from '../../Assests/avatars/boy1.png';  
+import img2 from '../../Assests/avatars/boy2.png';  
+import img3 from '../../Assests/avatars/boy3.png';  
 
 const ForYou = () => {  
     const { data } = useContext(UserContext);  
