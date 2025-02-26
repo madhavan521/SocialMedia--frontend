@@ -8,16 +8,15 @@ import img2 from '../../Assests/avatars/boy2.png';
 import img3 from '../../Assests/avatars/boy3.png';  
 
 const ForYou = () => {  
-    const { data } = useContext(UserContext);  
+    const { data } = useContext(UserContext); // Get user data from context  
     const [posts, setPosts] = useState([]);  
     const [loading, setLoading] = useState(true);  
-    const image = [img1, img2, img3];  
-    const num = Math.floor(Math.random() * 3);  
-    const navigate = useNavigate();  
+    const images = [img1, img2, img3];  
+    const navigate = useNavigate(); // Hook for navigation  
 
     useEffect(() => {  
         const fetchPosts = async () => {  
-            setLoading(true);  
+            setLoading(true); // Set loading to true before fetching  
             try {  
                 const response = await fetch("https://socialmedia-backend-wlia.onrender.com/api/posts/getall", {  
                     method: "GET",  
@@ -35,11 +34,17 @@ const ForYou = () => {
                 console.error(err);  
                 toast.error("Error fetching posts");  
             } finally {  
-                setLoading(false);  
+                setLoading(false); // Set loading to false after the fetch is complete  
             }  
         };  
-        fetchPosts();  
-    }, []);  
+        
+        // Only fetch posts if user data is available  
+        if (data) {  
+            fetchPosts();  
+        } else {  
+            setLoading(false); // No user data, end loading  
+        }  
+    }, [data]); // Depend on user data  
 
     const handleLike = async (id) => {  
         try {  
@@ -52,7 +57,7 @@ const ForYou = () => {
             });  
             if (response.ok) {  
                 toast.success("Liked successfully");  
-                setPosts((prevPosts) =>   
+                setPosts(prevPosts =>   
                     prevPosts.map(post =>   
                         post._id === id ? { ...post, likes: [...post.likes, data._id] } : post  
                     )  
@@ -75,7 +80,7 @@ const ForYou = () => {
             });  
             if (response.ok) {  
                 toast.success("Unliked successfully");  
-                setPosts((prevPosts) =>   
+                setPosts(prevPosts =>   
                     prevPosts.map(post =>   
                         post._id === id ? { ...post, likes: post.likes.filter(uid => uid !== data._id) } : post  
                     )  
@@ -87,15 +92,15 @@ const ForYou = () => {
         }  
     };  
 
-    if (loading) return <p>Loading posts   please Signin...</p>;   
+    if (loading) return <p>Loading posts...</p>; // Show loading if fetching posts  
 
     // Check if user data is available  
     if (!data) {  
         return (  
-            <div className='container'>  
+            <div className="container text-center">  
                 <Toaster position="top-center" reverseOrder={false} />  
                 <p>Please log in to see posts.</p>  
-                <button onClick={() => navigate('/login')} className='btn btn-primary'>  
+                <button onClick={() => navigate('/login')} className="btn btn-primary">  
                     Log In  
                 </button>  
             </div>  
@@ -103,47 +108,46 @@ const ForYou = () => {
     }  
 
     return (  
-        <div className='container'>  
+        <div className="container">  
             <Toaster position="top-center" reverseOrder={false} />  
 
-            {Array.isArray(posts) && posts.map((item) =>  
-                <div className='row' key={item._id}>  
-                    <div className='d-inline d-flex'>  
-                        <img src={image[num]} alt="" className='mt-1' width="38px" height="38px"  
-                             style={{ borderRadius: "30px" }} />  
-                        <div className='ms-2'>  
-                            <li className='h5 mb-0'>{item.user.fullname}</li>  
+            {Array.isArray(posts) && posts.map((item) => (  
+                <div className="row" key={item._id}>  
+                    <div className="d-inline d-flex">  
+                        <img src={images[Math.floor(Math.random() * images.length)]} alt="" className="mt-1" width="38px" height="38px" style={{ borderRadius: "30px" }} />  
+                        <div className="ms-2">  
+                            <li className="h5 mb-0">{item.user.fullname}</li>  
                             <Link to={`/${item.user.username}`}>  
                                 <span style={{ fontSize: "12px" }}>@{item.user.username}</span>  
                             </Link>  
                         </div>  
                     </div>  
 
-                    <div className='row card bg-dark my-2 ms-1'>  
-                        <p className='text-light my-3'>{item.text}</p>  
+                    <div className="row card bg-dark my-2 ms-1">  
+                        <p className="text-light my-3">{item.text}</p>  
                     </div>  
-                    <div className='row my-1'>  
+                    <div className="row my-1">  
                         <div className="col-6 d-flex justify-content-center align-items-center">  
                             <CiHeart  
                                 style={{  
                                     width: "20px",  
                                     height: "20px",  
-                                    color: item.likes.includes(data._id) ? "red" : "white"   
+                                    color: item.likes.includes(data._id) ? "red" : "white"  
                                 }}  
                                 onClick={() => item.likes.includes(data._id)  
                                     ? handleUnLike(item._id)  
                                     : handleLike(item._id)}  
-                                className='likeicon'  
+                                className="likeicon"  
                                 aria-label={item.likes.includes(data._id) ? "Unlike" : "Like"}  
                             />  
                         </div>  
                         <div className="col-6 d-flex justify-content-center align-items-center">  
-                            <CiBookmark aria-label="Bookmark"/>   
-                        </div>   
+                            <CiBookmark aria-label="Bookmark"/>  
+                        </div>  
                     </div>  
                     <hr />  
                 </div>  
-            )}  
+            ))}  
         </div>  
     );  
 };  
